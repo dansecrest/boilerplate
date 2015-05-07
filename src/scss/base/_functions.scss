@@ -1,0 +1,20 @@
+@function parseInt($n) {
+    @return $n / ($n * 0 + 1);
+}
+
+@function em($px, $base: $base-font-size) {
+    @return ($px / $base) * 1em;
+}
+
+@function rem($px_value) {
+    $unit: unit($px_value);
+    $base: parseInt($base_font_size);
+    $value: parseInt($px_value);
+
+    @if ('px' == $unit) {
+        @return ($value / $base) + rem;
+    }
+    @else {
+        @return $px_value;
+    }
+}

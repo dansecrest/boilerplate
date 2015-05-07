@@ -1,0 +1,14 @@
+{
+  "name": "Boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "authors": [
+    "Dan Secrest"
+  ],
+  "ignore": [],
+  "dependencies": {
+    "susy": "~2.2.3",
+    "mappy-breakpoints": "~0.1.2"
+  },
+  "private": true
+}
