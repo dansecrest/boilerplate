@@ -75,16 +75,6 @@ gulp.task('watch', function () {
     gulp.watch('src/js/**/*.js', ['scripts-dev']);
 });
 
-// Serve task
-gulp.task('serve', ['clean'], function () {
-    gulp.start(
-        'styles-dev',
-        'scripts-dev',
-        'browser-sync',
-        'watch'
-    );
-});
-
 // Build task
 gulp.task('build', ['clean'], function () {
     gulp.start(
@@ -94,4 +84,11 @@ gulp.task('build', ['clean'], function () {
 });
 
 // Default task
-gulp.task('default', []);
+gulp.task('default', ['clean'], function () {
+    gulp.start(
+        'styles-dev',
+        'scripts-dev',
+        'browser-sync',
+        'watch'
+    );
+});
