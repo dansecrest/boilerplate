@@ -1,9 +1,8 @@
 'use strict';
 
-// Include gulp
+// PLUGINS
 var gulp = require('gulp');
 
-// Include plugins
 var plugins = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'gulp.*'],
     replaceString: /\bgulp[\-.]/
@@ -12,7 +11,8 @@ var plugins = require('gulp-load-plugins')({
 var browserSync = require('browser-sync');
 var del = require('del');
 
-// Styles for dev
+
+// STYLES
 gulp.task('styles-dev', function () {
     return gulp.src('src/scss/**/*.scss')
         .pipe(plugins.sourcemaps.init())
@@ -26,14 +26,6 @@ gulp.task('styles-dev', function () {
         .pipe(gulp.dest('assets/css'));
 });
 
-// Scripts for dev
-gulp.task('scripts-dev', function () {
-    return gulp.src('src/js/**/*.js')
-        .pipe(plugins.concat('all.js'))
-        .pipe(gulp.dest('assets/js'));
-});
-
-// Styles for build
 gulp.task('styles-build', function () {
     return gulp.src('src/scss/**/*.scss')
         .pipe(plugins.sass())
@@ -45,7 +37,14 @@ gulp.task('styles-build', function () {
         .pipe(gulp.dest('assets/css'));
 });
 
-// Scripts for build
+
+// SCRIPTS
+gulp.task('scripts-dev', function () {
+    return gulp.src('src/js/**/*.js')
+        .pipe(plugins.concat('all.js'))
+        .pipe(gulp.dest('assets/js'));
+});
+
 gulp.task('scripts-build', function () {
     return gulp.src('src/js/**/*.js')
         .pipe(plugins.concat('all.js'))
@@ -54,12 +53,14 @@ gulp.task('scripts-build', function () {
         .pipe(gulp.dest('assets/js'));
 });
 
-// Remove assets to start fresh
+
+// CLEAN
 gulp.task('clean', function (cb) {
     del(['assets/css', 'assets/js'], cb);
 });
 
-// Browser sync task to start serve
+
+// BROWSERSYNC
 gulp.task('browser-sync', function () {
     browserSync({
         server: {
@@ -69,13 +70,15 @@ gulp.task('browser-sync', function () {
     });
 });
 
-// Watch files for changes
+
+// WATCHES
 gulp.task('watch', function () {
     gulp.watch('src/scss/**/*.scss', ['styles-dev']);
     gulp.watch('src/js/**/*.js', ['scripts-dev']);
 });
 
-// Build task
+
+// BUILD
 gulp.task('build', ['clean'], function () {
     gulp.start(
         'styles-build',
@@ -83,7 +86,8 @@ gulp.task('build', ['clean'], function () {
     );
 });
 
-// Default task
+
+// DEFAULT
 gulp.task('default', ['clean'], function () {
     gulp.start(
         'styles-dev',
