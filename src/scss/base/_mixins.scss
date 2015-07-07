@@ -1,0 +1,29 @@
+@mixin opacity($value) {
+    $decimal: $value / 100;
+
+    opacity: $decimal;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + $value + ")";
+    filter: alpha(opacity=$value);
+}
+
+@mixin button($bg, $bg-hover:none, $opacity:100) {
+    display: inline-block;
+    padding: 15px 30px 14px;
+    background-color: $bg;
+    border-radius: 2px;
+    font-size: 14px;
+    color: $white;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: none;
+    width: 100%;
+    &:hover {
+        background-color: $bg-hover;
+        @include opacity($opacity);
+    }
+
+    @include mappy-bp(small) {
+        width: auto;
+    }
+}
