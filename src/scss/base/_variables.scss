@@ -1,7 +1,11 @@
+$base_font_size: 16px;
+
 $breakpoints: (
-    'small'     : 656px,
-    'medium'    : 977px,
-    'large'     : 1024px
+    'small'     : 767px,
+    'medium'    : 1024px,
+    'large'     : 1440px
 );
 
-$base_font_size: 16px;
+// COLORS
+$white: #fff;
+$black: #000;
