@@ -8,7 +8,7 @@
   "ignore": [],
   "dependencies": {
     "mappy-breakpoints": "~0.1.2",
-    "susy": "~2.2.3"
+    "susy": "~2.2.6"
   },
   "private": true
 }
