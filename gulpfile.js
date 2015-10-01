@@ -56,7 +56,7 @@ gulp.task('scripts-build', function() {
 
 // CLEAN
 gulp.task('clean', function(cb) {
-    del(['assets/css', 'assets/js'], cb);
+    del(['assets'], cb);
 });
 
 
