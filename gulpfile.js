@@ -13,7 +13,7 @@ var del = require('del');
 
 
 // STYLES
-gulp.task('styles-dev', function () {
+gulp.task('styles-dev', function() {
     return gulp.src('src/scss/**/*.scss')
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.sass({
@@ -26,7 +26,7 @@ gulp.task('styles-dev', function () {
         .pipe(gulp.dest('assets/css'));
 });
 
-gulp.task('styles-build', function () {
+gulp.task('styles-build', function() {
     return gulp.src('src/scss/**/*.scss')
         .pipe(plugins.sass())
         .pipe(plugins.autoprefixer({
@@ -39,13 +39,13 @@ gulp.task('styles-build', function () {
 
 
 // SCRIPTS
-gulp.task('scripts-dev', function () {
+gulp.task('scripts-dev', function() {
     return gulp.src('src/js/**/*.js')
         .pipe(plugins.concat('all.js'))
         .pipe(gulp.dest('assets/js'));
 });
 
-gulp.task('scripts-build', function () {
+gulp.task('scripts-build', function() {
     return gulp.src('src/js/**/*.js')
         .pipe(plugins.concat('all.js'))
         .pipe(plugins.uglify())
@@ -55,13 +55,13 @@ gulp.task('scripts-build', function () {
 
 
 // CLEAN
-gulp.task('clean', function (cb) {
+gulp.task('clean', function(cb) {
     del(['assets/css', 'assets/js'], cb);
 });
 
 
 // BROWSERSYNC
-gulp.task('browser-sync', function () {
+gulp.task('browser-sync', function() {
     browserSync({
         server: {
             baseDir: './'
@@ -72,14 +72,14 @@ gulp.task('browser-sync', function () {
 
 
 // WATCHES
-gulp.task('watch', function () {
+gulp.task('watch', function() {
     gulp.watch('src/scss/**/*.scss', ['styles-dev']);
     gulp.watch('src/js/**/*.js', ['scripts-dev']);
 });
 
 
 // BUILD
-gulp.task('build', ['clean'], function () {
+gulp.task('build', ['clean'], function() {
     gulp.start(
         'styles-build',
         'scripts-build'
@@ -88,7 +88,7 @@ gulp.task('build', ['clean'], function () {
 
 
 // DEFAULT
-gulp.task('default', ['clean'], function () {
+gulp.task('default', ['clean'], function() {
     gulp.start(
         'styles-dev',
         'scripts-dev',
