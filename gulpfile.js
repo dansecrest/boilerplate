@@ -56,6 +56,7 @@ gulp.task('browser-sync', function() {
         server: {
             baseDir: './'
         },
+        // proxy: 'site.dev',
         files: ['assets/css/**/*.css', 'src/js/**/*.js', '*.html']
     });
 });
