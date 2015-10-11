@@ -45,8 +45,10 @@ gulp.task('scripts', function() {
 
 
 // CLEAN
-gulp.task('clean', function(cb) {
-    del(['assets'], cb);
+gulp.task('clean', function() {
+    return del(['assets'], {
+        force: true
+    });
 });
 
 
