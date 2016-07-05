@@ -19,7 +19,7 @@ var production = plugins.environments.production;
 
 // STYLES
 gulp.task('styles', function() {
-    return gulp.src('src/scss/**/*.scss')
+    return gulp.src('src/styles/**/*.scss')
         .pipe(development(plugins.sourcemaps.init()))
         .pipe(plugins.sass({
             errLogToConsole: true
@@ -30,17 +30,17 @@ gulp.task('styles', function() {
         .pipe(development(plugins.sourcemaps.write()))
         .pipe(production(plugins.minifyCss()))
         .pipe(production(plugins.rename({suffix: '.min'})))
-        .pipe(gulp.dest('assets/css'));
+        .pipe(gulp.dest('assets/styles'));
 });
 
 
 // SCRIPTS
 gulp.task('scripts', function() {
-    return gulp.src('src/js/**/*.js')
-        .pipe(plugins.concat('all.js'))
+    return gulp.src('src/scripts/**/*.js')
+        .pipe(plugins.concat('main.js'))
         .pipe(production(plugins.uglify()))
         .pipe(production(plugins.rename({suffix: '.min'})))
-        .pipe(gulp.dest('assets/js'));
+        .pipe(gulp.dest('assets/scripts'));
 });
 
 
@@ -59,15 +59,15 @@ gulp.task('browser-sync', function() {
             baseDir: './'
         },
         // proxy: 'site.dev',
-        files: ['assets/css/**/*.css', 'src/js/**/*.js', '*.html']
+        files: ['assets/styles/**/*.css', 'src/scripts/**/*.js', '*.html']
     });
 });
 
 
 // WATCHES
 gulp.task('watch', function() {
-    gulp.watch('src/scss/**/*.scss', ['styles']);
-    gulp.watch('src/js/**/*.js', ['scripts']);
+    gulp.watch('src/styles/**/*.scss', ['styles']);
+    gulp.watch('src/scripts/**/*.js', ['scripts']);
 });
 
 
