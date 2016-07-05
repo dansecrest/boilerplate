@@ -17,6 +17,20 @@ var development = plugins.environments.development;
 var production = plugins.environments.production;
 
 
+// PATHS
+var paths = {
+    assets: {
+        fonts: 'src/fonts/*.*',
+        icons: 'src/fonts/icons/**/*.*',
+        images: 'src/images/**/*.*'
+    },
+    scripts: {
+        vendor: [],
+        main: []
+    }
+};
+
+
 // STYLES
 gulp.task('styles', function() {
     return gulp.src('src/styles/**/*.scss')
@@ -41,6 +55,14 @@ gulp.task('scripts', function() {
         .pipe(production(plugins.uglify()))
         .pipe(production(plugins.rename({suffix: '.min'})))
         .pipe(gulp.dest('assets/scripts'));
+});
+
+
+// IMAGEMIN
+gulp.task('imagemin', function() {
+    return gulp.src(paths.assets.images)
+        .pipe(plugins.imagemin())
+        .pipe(gulp.dest('assets/images'));
 });
 
 
@@ -74,6 +96,7 @@ gulp.task('watch', function() {
 // BUILD
 gulp.task('build', ['clean'], function() {
     gulp.start(
+        'imagemin',
         'styles',
         'scripts'
     );
@@ -83,6 +106,7 @@ gulp.task('build', ['clean'], function() {
 // DEFAULT
 gulp.task('default', ['clean'], function() {
     gulp.start(
+        'imagemin',
         'styles',
         'scripts',
         'browser-sync',
