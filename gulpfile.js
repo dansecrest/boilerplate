@@ -8,8 +8,12 @@ var plugins = require('gulp-load-plugins')({
     replaceString: /\bgulp[\-.]/
 });
 
+var async = require('async');
 var browserSync = require('browser-sync');
 var del = require('del');
+var runSequence = require('run-sequence');
+
+var runTimestamp = Math.round(Date.now()/1000);
 
 
 // ENVIRONMENTS
@@ -29,6 +33,41 @@ var paths = {
         main: []
     }
 };
+
+
+// ICONS
+gulp.task('iconfont', function(done) {
+    var iconStream = gulp.src(paths.assets.icons)
+        .pipe(plugins.iconfont({
+            fontHeight: 1001,
+            fontName: 'icons',
+            formats: ['svg', 'ttf', 'eot', 'woff', 'woff2'],
+            normalize: true,
+            prependUnicode: false,
+            timeStamp: runTimestamp
+        }));
+
+    async.parallel([
+        function handleGlyphs(callback) {
+            iconStream.on('glyphs', function(glyphs, options) {
+                gulp.src('src/styles/icons.css')
+                    .pipe(plugins.consolidate('lodash', {
+                        className: 'icon',
+                        fontName: 'icons',
+                        fontPath: '../fonts/',
+                        glyphs: glyphs
+                    }))
+                    .pipe(gulp.dest('assets/styles'))
+                    .on('finish', callback);
+            });
+        },
+        function handleFonts(callback) {
+            iconStream
+                .pipe(gulp.dest('assets/fonts'))
+                .on('finish', callback);
+        }
+    ], done);
+});
 
 
 // STYLES
@@ -97,22 +136,24 @@ gulp.task('watch', function() {
 
 
 // BUILD
-gulp.task('build', ['clean'], function() {
-    gulp.start(
+gulp.task('build', ['clean'], function(callback) {
+    runSequence(
         'imagemin',
-        'styles',
-        'scripts'
+        'iconfont',
+        ['styles', 'scripts'],
+        callback
     );
 });
 
 
 // DEFAULT
-gulp.task('default', ['clean'], function() {
-    gulp.start(
+gulp.task('default', ['clean'], function(callback) {
+    runSequence(
         'imagemin',
-        'styles',
-        'scripts',
+        'iconfont',
+        ['styles', 'scripts'],
         'browser-sync',
-        'watch'
+        'watch',
+        callback
     );
 });
