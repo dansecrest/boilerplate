@@ -32,17 +32,20 @@ var paths = {
 
 
 // STYLES
-gulp.task('styles', function() {
+gulp.task('styles', function(callback) {
     return gulp.src('src/styles/**/*.scss')
         .pipe(development(plugins.sourcemaps.init()))
         .pipe(plugins.sass({
             errLogToConsole: true
+        }).on('error', function(error) {
+            console.error('Error!', error.message);
+            callback();
         }))
         .pipe(plugins.autoprefixer({
-            browsers: ['last 2 version']
+            browsers: ['last 2 versions']
         }))
         .pipe(development(plugins.sourcemaps.write()))
-        .pipe(production(plugins.minifyCss()))
+        .pipe(production(plugins.cleanCss()))
         .pipe(production(plugins.rename({suffix: '.min'})))
         .pipe(gulp.dest('assets/styles'));
 });
