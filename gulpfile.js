@@ -76,7 +76,7 @@ gulp.task('iconfont', function(done) {
 
 
 // STYLES
-gulp.task('styles', function(callback) {
+gulp.task('styles', function() {
     return gulp.src('src/styles/**/*.scss')
         .pipe(development(plugins.sourcemaps.init()))
         .pipe(plugins.plumber({
