@@ -15,6 +15,11 @@ var runSequence = require('run-sequence');
 
 var runTimestamp = Math.round(Date.now()/1000);
 
+var onError = function(error) {
+    console.error(error.message);
+    this.emit('end');
+};
+
 
 // ENVIRONMENTS
 var development = plugins.environments.development;
@@ -74,12 +79,10 @@ gulp.task('iconfont', function(done) {
 gulp.task('styles', function(callback) {
     return gulp.src('src/styles/**/*.scss')
         .pipe(development(plugins.sourcemaps.init()))
-        .pipe(plugins.sass({
-            errLogToConsole: true
-        }).on('error', function(error) {
-            console.error('Error!', error.message);
-            callback();
+        .pipe(plugins.plumber({
+            errorHandler: onError
         }))
+        .pipe(plugins.sass())
         .pipe(plugins.autoprefixer({
             browsers: ['last 2 versions']
         }))
