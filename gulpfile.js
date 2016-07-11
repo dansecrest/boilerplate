@@ -111,6 +111,13 @@ gulp.task('imagemin', function() {
 });
 
 
+// COPY
+gulp.task('copy', function() {
+    gulp.src(paths.assets.fonts, {base: './src'})
+        .pipe(gulp.dest('assets'));
+});
+
+
 // CLEAN
 gulp.task('clean', function() {
     return del(['assets'], {
@@ -143,7 +150,7 @@ gulp.task('build', ['clean'], function(callback) {
     runSequence(
         'imagemin',
         'iconfont',
-        ['styles', 'scripts'],
+        ['styles', 'scripts', 'copy'],
         callback
     );
 });
@@ -154,7 +161,7 @@ gulp.task('default', ['clean'], function(callback) {
     runSequence(
         'imagemin',
         'iconfont',
-        ['styles', 'scripts'],
+        ['styles', 'scripts', 'copy'],
         'browser-sync',
         'watch',
         callback
