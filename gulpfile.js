@@ -62,13 +62,13 @@ gulp.task('iconfont', function(done) {
                         fontPath: '../fonts/',
                         glyphs: glyphs
                     }))
-                    .pipe(gulp.dest('build/assets/styles'))
+                    .pipe(gulp.dest('assets/styles'))
                     .on('finish', callback);
             });
         },
         function handleFonts(callback) {
             iconStream
-                .pipe(gulp.dest('build/assets/fonts'))
+                .pipe(gulp.dest('assets/fonts'))
                 .on('finish', callback);
         }
     ], done);
@@ -89,7 +89,7 @@ gulp.task('styles', function() {
         .pipe(development(plugins.sourcemaps.write()))
         .pipe(production(plugins.cleanCss()))
         .pipe(production(plugins.rename({suffix: '.min'})))
-        .pipe(gulp.dest('build/assets/styles'));
+        .pipe(gulp.dest('assets/styles'));
 });
 
 
@@ -99,7 +99,7 @@ gulp.task('scripts', function() {
         .pipe(plugins.concat('main.js'))
         .pipe(production(plugins.uglify()))
         .pipe(production(plugins.rename({suffix: '.min'})))
-        .pipe(gulp.dest('build/assets/scripts'));
+        .pipe(gulp.dest('assets/scripts'));
 });
 
 
@@ -107,20 +107,20 @@ gulp.task('scripts', function() {
 gulp.task('imagemin', function() {
     return gulp.src(paths.assets.images)
         .pipe(plugins.imagemin())
-        .pipe(gulp.dest('build/assets/images'));
+        .pipe(gulp.dest('assets/images'));
 });
 
 
 // COPY
 gulp.task('copy', function() {
     gulp.src(paths.assets.fonts, {base: './src'})
-        .pipe(gulp.dest('build/assets'));
+        .pipe(gulp.dest('assets'));
 });
 
 
 // CLEAN
 gulp.task('clean', function() {
-    return del(['build'], {
+    return del(['assets'], {
         force: true
     });
 });
@@ -130,11 +130,10 @@ gulp.task('clean', function() {
 gulp.task('browser-sync', function() {
     browserSync({
         server: {
-            baseDir: 'build',
-            index: 'index.html'
+            baseDir: './'
         },
         // proxy: 'site.dev',
-        files: ['build/assets/styles/**/*.css', 'build/assets/scripts/**/*.js', 'build/*.html']
+        files: ['assets/styles/**/*.css', 'src/scripts/**/*.js', '*.html']
     });
 });
 
